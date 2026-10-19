@@ -1,0 +1,24 @@
+# Light and dark appearance. Defining both [theme.light] and [theme.dark]
+# enables Streamlit's built-in theme switch (menu -> Settings -> Theme).
+# Theme colours cannot be changed from Python code, so they live here.
+
+[theme]
+baseRadius = "0.6rem"
+showWidgetBorder = true
+
+[theme.light]
+primaryColor = "#1D4ED8"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#EFF6FF"
+textColor = "#111827"
+borderColor = "#D1D5DB"
+
+[theme.dark]
+primaryColor = "#3B82F6"
+backgroundColor = "#0E1117"
+secondaryBackgroundColor = "#16202F"
+textColor = "#E5E7EB"
+borderColor = "#374151"
+
+[browser]
+gatherUsageStats = false
