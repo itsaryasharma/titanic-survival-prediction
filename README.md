@@ -10,6 +10,10 @@ sinking of RMS Titanic (15 April 1912), and explains which factors drive the est
 
 ---
 
+**Live Demo:** https://titanic-survival-prediction-jwwj.streamlit.app/
+
+---
+
 ## Problem statement
 
 Survival on the Titanic was far from random: the "women and children first" protocol and unequal access
@@ -18,6 +22,7 @@ records with a leakage-free pipeline, evaluate the model against simple baseline
 estimate with honest explanations.
 
 ### Objectives
+
 1. Build a reproducible preprocessing pipeline that handles missing values and engineers meaningful features.
 2. Compare an interpretable model with tree ensembles using cross-validation.
 3. Evaluate against simple baselines, including the strong rule "women survive, men do not".
@@ -26,26 +31,28 @@ estimate with honest explanations.
 
 ## Features
 
-| Area | What it does |
-|---|---|
-| **Predict** | Passenger form (class, sex, age or *unknown*, family aboard, fare or class-typical fare, port) and four example profiles |
-| **Estimate** | Survival probability, compared with the overall survival rate of 38% |
-| **Why?** | Exact contribution of each attribute compared with an average passenger |
-| **What if?** | The same passenger in a different class or with the other sex |
-| **Input checks** | Hard validation (e.g. age 0–100) plus warnings outside the training range |
-| **Model card** | Metrics, comparison with baselines, confusion matrix, ROC curve, CV model comparison, **leakage experiment**, learned weights |
-| **Data insights** | Survival by sex × class, by age group, by family size; missing-value table |
+| Area              | What it does                                                                                                                  |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| **Predict**       | Passenger form (class, sex, age or _unknown_, family aboard, fare or class-typical fare, port) and four example profiles      |
+| **Estimate**      | Survival probability, compared with the overall survival rate of 38%                                                          |
+| **Why?**          | Exact contribution of each attribute compared with an average passenger                                                       |
+| **What if?**      | The same passenger in a different class or with the other sex                                                                 |
+| **Input checks**  | Hard validation (e.g. age 0–100) plus warnings outside the training range                                                     |
+| **Model card**    | Metrics, comparison with baselines, confusion matrix, ROC curve, CV model comparison, **leakage experiment**, learned weights |
+| **Data insights** | Survival by sex × class, by age group, by family size; missing-value table                                                    |
 
 ## Technology stack
+
 Python 3.13 · scikit-learn 1.9 (Pipeline, ColumnTransformer, SimpleImputer, OneHotEncoder, LogisticRegression,
 RandomForest, HistGradientBoosting) · pandas · NumPy · Streamlit 1.66 · Plotly · joblib · pytest.
 
 ## Dataset
+
 **`titanic3`**, Vanderbilt University Department of Biostatistics (compiled by Thomas Cason from the
-*Encyclopedia Titanica*): 1,309 passengers (crew not included), 14 columns. It has more passengers than
+_Encyclopedia Titanica_): 1,309 passengers (crew not included), 14 columns. It has more passengers than
 the familiar Kaggle training file (891 rows) and needs no login.
-*"Data obtained from http://hbiostat.org/data courtesy of the Vanderbilt University Department of
-Biostatistics."* The publisher grants permission to anyone to use the data, so a copy is included in
+_"Data obtained from http://hbiostat.org/data courtesy of the Vanderbilt University Department of
+Biostatistics."_ The publisher grants permission to anyone to use the data, so a copy is included in
 `data/titanic3.csv` (checksum verified). See [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md).
 
 ## Architecture
@@ -93,19 +100,20 @@ The app opens at **http://localhost:8501**. Stop it with `Ctrl + C`. Run the tes
 
 ### Common startup problems
 
-| Symptom | Fix |
-|---|---|
-| `Activate.ps1 cannot be loaded because running scripts is disabled` | Run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`, then activate again (affects this window only) |
-| `streamlit` / `python` is not recognised, or `ModuleNotFoundError` | The environment is not active: run the `Activate.ps1` line again; always start the app with `python -m streamlit run app.py` |
-| `ModuleNotFoundError: No module named 'src'` | You are not in the project folder; `cd` into the folder that contains `app.py` |
-| `Port 8501 is already in use` | Another app is running; stop it, or use `python -m streamlit run app.py --server.port 8502` |
-| `WinError 206: The filename or extension is too long` during `pip install` | Create the environment at a short path such as `C:\venvs\titanic` (as above) |
-| The browser does not open | Open http://localhost:8501 manually |
+| Symptom                                                                    | Fix                                                                                                                          |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `Activate.ps1 cannot be loaded because running scripts is disabled`        | Run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`, then activate again (affects this window only)             |
+| `streamlit` / `python` is not recognised, or `ModuleNotFoundError`         | The environment is not active: run the `Activate.ps1` line again; always start the app with `python -m streamlit run app.py` |
+| `ModuleNotFoundError: No module named 'src'`                               | You are not in the project folder; `cd` into the folder that contains `app.py`                                               |
+| `Port 8501 is already in use`                                              | Another app is running; stop it, or use `python -m streamlit run app.py --server.port 8502`                                  |
+| `WinError 206: The filename or extension is too long` during `pip install` | Create the environment at a short path such as `C:\venvs\titanic` (as above)                                                 |
+| The browser does not open                                                  | Open http://localhost:8501 manually                                                                                          |
 
 ## How to use
+
 1. Click an example profile, e.g. **1st-class woman, 38** vs **3rd-class man, 25, alone**.
-2. Read the *Why?* chart: which attributes raised or lowered the estimate?
-3. Use *What if?* to see the same passenger in another class.
+2. Read the _Why?_ chart: which attributes raised or lowered the estimate?
+3. Use _What if?_ to see the same passenger in another class.
 4. Tick **Age unknown**, or enter a fare above £600, to see how the app handles missing and unusual values.
 5. Open **Model card** for the evaluation, and the leakage experiment.
 
@@ -113,11 +121,11 @@ The app opens at **http://localhost:8501**. Stop it with `Ctrl + C`. Run the tes
 
 **Selected model:** Logistic Regression with engineered interaction features.
 
-| Approach | Accuracy | F1 (survived) |
-|---|---|---|
-| **This model** | **81.7%** | **0.745** |
-| Rule: women survive, men do not | 80.2% | 0.732 |
-| Always predict "did not survive" | 61.8% | 0.000 |
+| Approach                         | Accuracy  | F1 (survived) |
+| -------------------------------- | --------- | ------------- |
+| **This model**                   | **81.7%** | **0.745**     |
+| Rule: women survive, men do not  | 80.2%     | 0.732         |
+| Always predict "did not survive" | 61.8%     | 0.000         |
 
 ROC-AUC **0.876** · precision 0.795 · recall 0.700 · Brier score 0.130 · confusion matrix TN 144, FP 18, FN 30, TP 70.
 
@@ -134,6 +142,7 @@ rule ignores (boys, women in 3rd class).
 improvement is fake, because lifeboat assignment is only known after the outcome.
 
 ## Repository structure
+
 ```
 titanic-survival-prediction/
 ├── app.py                  # Streamlit UI (Predict · Model card · How it works · Data insights)
@@ -153,14 +162,17 @@ titanic-survival-prediction/
 ```
 
 ## Limitations
+
 - Passengers only (no crew); 1,047 training passengers; rare profiles rest on very few examples.
 - Ignores where people were on the ship, crew decisions and luck, which determined many outcomes.
 - Encodes 1912 social norms and inequality, so it must not be generalised or used to judge people.
 - Probabilities are not formally calibrated (Brier score 0.130 is reported).
 
 ## Future improvements
+
 - Extract titles (Mr/Mrs/Master…) from names as an additional feature; calibration curve; repeated CV for confidence intervals.
 
 ## Documentation
+
 [Model card](docs/MODEL_CARD.md) · [Development log](docs/DEVELOPMENT_LOG.md) ·
 [Data sources](docs/DATA_SOURCES.md) · [Testing](docs/TESTING.md)
